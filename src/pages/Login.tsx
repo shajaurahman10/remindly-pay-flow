@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Eye, EyeOff, Moon, Sun } from 'lucide-react';
@@ -32,9 +33,19 @@ const Login = () => {
       toast.success('Welcome back!');
       navigate(from, { replace: true });
     } catch (error) {
+      console.error('Login error:', error);
       toast.error('Invalid email or password');
     } finally {
       setLoading(false);
+    }
+  };
+
+  // Safe theme toggle with fallback
+  const handleToggleTheme = () => {
+    try {
+      toggleTheme();
+    } catch (error) {
+      console.error('Theme toggle error:', error);
     }
   };
 
@@ -47,7 +58,7 @@ const Login = () => {
           <div className="lg:hidden flex justify-between items-center mb-8">
             <Logo size="md" linkTo={null} />
             <button
-              onClick={toggleTheme}
+              onClick={handleToggleTheme}
               className="p-2 rounded-lg bg-gray-800 hover:bg-gray-700 transition-colors"
             >
               {isDark ? <Sun className="w-5 h-5 text-gray-300" /> : <Moon className="w-5 h-5 text-gray-300" />}
