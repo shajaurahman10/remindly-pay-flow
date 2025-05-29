@@ -33,10 +33,12 @@ const Layout = () => {
         <div className="flex h-full flex-col">
           {/* Logo */}
           <div className="flex h-16 shrink-0 items-center px-6 border-b border-white/10">
-            <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-gradient-to-br from-primary-500 to-primary-700 rounded-lg flex items-center justify-center">
-                <Bell className="w-5 h-5 text-white" />
-              </div>
+            <div className="flex items-center space-x-3">
+              <img 
+                src="/lovable-uploads/a01a870f-47d3-417e-ba39-ba60eb4c54a0.png" 
+                alt="MSR Logo" 
+                className="w-8 h-8 object-contain"
+              />
               <div>
                 <h1 className="text-lg font-display font-bold text-white">Remindly</h1>
                 <p className="text-xs text-gray-400 font-medium">BY MSR</p>
