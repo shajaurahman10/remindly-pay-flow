@@ -3,7 +3,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Eye, EyeOff, Moon, Sun } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
-import { toast } from 'sonner';
+import { toast } from '../components/ui/sonner';
 import Logo from '../components/Logo';
 import Footer from '../components/Footer';
 
