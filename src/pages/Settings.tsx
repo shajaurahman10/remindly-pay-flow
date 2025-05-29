@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Save, MessageSquare, CreditCard, Bell, Globe, Key } from 'lucide-react';
 import { toast } from 'sonner';
@@ -285,10 +284,10 @@ const Settings = () => {
                     <h3 className="text-green-400 font-medium mb-2">Template Preview</h3>
                     <p className="text-sm text-gray-300">
                       {settings.reminderTemplate
-                        .replace('{{clientName}}', 'John Doe')
-                        .replace('{{amount}}', '₹15,000')
-                        .replace('{{paymentLink}}', 'https://pay.example.com/abc123')
-                        .replace('{{dueDate}}', '15 Jan 2024')}
+                        .replace(/\{\{clientName\}\}/g, 'John Doe')
+                        .replace(/\{\{amount\}\}/g, '₹15,000')
+                        .replace(/\{\{paymentLink\}\}/g, 'https://pay.example.com/abc123')
+                        .replace(/\{\{dueDate\}\}/g, '15 Jan 2024')}
                     </p>
                   </div>
                 </div>
