@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Save, User, Phone, DollarSign, Calendar, Upload, CreditCard, QrCode } from 'lucide-react';
@@ -219,7 +218,7 @@ const AddClient = () => {
       // Create client record
       const clientData = {
         id: `client_${Date.now()}`,
-        userId: user?.uid || user?.id,
+        userId: user?.id || '',
         name: formData.name,
         phone: formData.phone,
         amount: Number(formData.amount),

@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { Plus, Users, Clock, CheckCircle, AlertCircle, Search, Filter, Send, CreditCard } from 'lucide-react';
+import { Plus, Users, Clock, CheckCircle, AlertCircle, Search, Filter, Send, CreditCard, DollarSign } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { usePaymentTracking } from '../hooks/usePaymentTracking';
