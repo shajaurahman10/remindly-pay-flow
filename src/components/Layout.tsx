@@ -1,13 +1,17 @@
 
 import React from 'react';
-import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
-import { Settings, LogOut, Users, Plus, Home, Bell } from 'lucide-react';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { Settings, LogOut, Plus, Home, Moon, Sun } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { useTheme } from '../context/ThemeContext';
+import Logo from './Logo';
+import Footer from './Footer';
 
 const Layout = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { user, logout } = useAuth();
+  const { isDark, toggleTheme } = useTheme();
 
   const handleLogout = async () => {
     try {
@@ -27,23 +31,19 @@ const Layout = () => {
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
       {/* Sidebar */}
       <div className="fixed inset-y-0 left-0 z-50 w-64 glass-effect">
         <div className="flex h-full flex-col">
           {/* Logo */}
-          <div className="flex h-16 shrink-0 items-center px-6 border-b border-white/10">
-            <div className="flex items-center space-x-3">
-              <img 
-                src="/lovable-uploads/a01a870f-47d3-417e-ba39-ba60eb4c54a0.png" 
-                alt="MSR Logo" 
-                className="w-8 h-8 object-contain"
-              />
-              <div>
-                <h1 className="text-lg font-display font-bold text-white">Remindly</h1>
-                <p className="text-xs text-gray-400 font-medium">BY MSR</p>
-              </div>
-            </div>
+          <div className="flex h-16 shrink-0 items-center justify-between px-6 border-b border-white/10">
+            <Logo size="md" />
+            <button
+              onClick={toggleTheme}
+              className="p-2 rounded-lg bg-gray-800/50 hover:bg-gray-700/50 transition-colors"
+            >
+              {isDark ? <Sun className="w-4 h-4 text-gray-300" /> : <Moon className="w-4 h-4 text-gray-300" />}
+            </button>
           </div>
 
           {/* Navigation */}
@@ -95,10 +95,11 @@ const Layout = () => {
       </div>
 
       {/* Main content */}
-      <div className="pl-64">
-        <main className="min-h-screen">
+      <div className="pl-64 flex flex-col min-h-screen">
+        <main className="flex-1">
           <Outlet />
         </main>
+        <Footer />
       </div>
     </div>
   );
