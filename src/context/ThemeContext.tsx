@@ -18,13 +18,25 @@ export const useTheme = () => {
 
 export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   const [isDark, setIsDark] = useState(() => {
-    const saved = localStorage.getItem('theme');
-    return saved ? saved === 'dark' : true; // Default to dark
+    try {
+      const saved = localStorage.getItem('theme');
+      return saved ? saved === 'dark' : true; // Default to dark
+    } catch {
+      return true; // Default fallback
+    }
   });
 
   useEffect(() => {
-    localStorage.setItem('theme', isDark ? 'dark' : 'light');
-    document.documentElement.classList.toggle('dark', isDark);
+    try {
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      if (isDark) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    } catch (error) {
+      console.warn('Failed to save theme preference:', error);
+    }
   }, [isDark]);
 
   const toggleTheme = () => {
