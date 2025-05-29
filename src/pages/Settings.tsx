@@ -1,5 +1,6 @@
+
 import React, { useState } from 'react';
-import { Save, MessageSquare, CreditCard, Bell, Globe, Key } from 'lucide-react';
+import { Save, MessageSquare, CreditCard, Bell, Globe } from 'lucide-react';
 import { toast } from 'sonner';
 
 interface SettingsState {
@@ -20,7 +21,7 @@ interface SettingsState {
 
 const Settings = () => {
   const [settings, setSettings] = useState<SettingsState>({
-    reminderTemplate: 'Hi {{clientName}}, this is a reminder for your pending payment of {{amount}}. Due date: {{dueDate}}. Please pay here: {{paymentLink}}',
+    reminderTemplate: 'Hello! 👋 Your payment of ₹{{amount}} is now due.\n\n💳 You can pay using:\n• UPI: {{upiId}}\n• {{razorpayLink}}\n{{qrCode}}\n\nPlease complete payment by {{endDate}} to avoid disruption.',
     paymentGateway: 'razorpay',
     razorpayKeyId: '',
     razorpayKeySecret: '',
@@ -94,23 +95,24 @@ const Settings = () => {
               <textarea
                 value={settings.reminderTemplate}
                 onChange={(e) => handleTemplateChange(e.target.value)}
-                rows={4}
+                rows={6}
                 className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 placeholder="Enter your reminder message template"
               />
               <p className="text-xs text-gray-400 mt-1">
-                Use {`{{clientName}}, {{amount}}, {{dueDate}}, {{paymentLink}}`} as placeholders
+                Use placeholders: {`{{amount}}, {{upiId}}, {{razorpayLink}}, {{qrCode}}, {{endDate}}`}
               </p>
               
               {settings.reminderTemplate && (
                 <div className="mt-3 p-3 bg-gray-800/50 rounded-lg border border-gray-700">
                   <h3 className="text-green-400 font-medium mb-2">Template Preview</h3>
-                  <p className="text-sm text-gray-300">
+                  <p className="text-sm text-gray-300 whitespace-pre-line">
                     {settings.reminderTemplate
-                      .replace(/\{\{clientName\}\}/g, 'John Doe')
                       .replace(/\{\{amount\}\}/g, '₹15,000')
-                      .replace(/\{\{paymentLink\}\}/g, 'https://pay.example.com/abc123')
-                      .replace(/\{\{dueDate\}\}/g, '15 Jan 2024')}
+                      .replace(/\{\{upiId\}\}/g, '9876543210@okaxis')
+                      .replace(/\{\{razorpayLink\}\}/g, '[Pay via Razorpay](https://rzp.io/l/abc123)')
+                      .replace(/\{\{qrCode\}\}/g, '• [View QR Code](https://example.com/qr)')
+                      .replace(/\{\{endDate\}\}/g, '15 Jan 2024')}
                   </p>
                 </div>
               )}
@@ -132,7 +134,7 @@ const Settings = () => {
               </label>
               <select
                 value={settings.paymentGateway}
-                onChange={(e) => setSettings(prev => ({ ...prev, paymentGateway: e.target.value }))}
+                onChange={(e) => setSettings(prev => ({ ...prev, paymentGateway: e.target.value as 'razorpay' | 'stripe' }))}
                 className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent"
               >
                 <option value="razorpay">Razorpay (India)</option>
